@@ -2,7 +2,7 @@
 <html lang="mk">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Најдоброто во Исламот – 3D книга</title>
 
     <!-- jQuery + Turn.js (page‑flip) -->
@@ -35,41 +35,44 @@
         #topbar {
             background: rgba(8, 8, 28, 0.95);
             backdrop-filter: blur(8px);
-            padding: 10px 20px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid rgba(255, 200, 100, 0.15);
             flex-shrink: 0;
-            z-index: 20;
+            z-index: 30;
+            min-height: 50px;
         }
         #topbar .logo {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             color: #ffdd88;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50%;
         }
         #topbar .logo small {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: normal;
-            color: #88aadd;
-            margin-left: 12px;
+            display: none;
         }
         #topbar .controls {
             display: flex;
-            gap: 14px;
+            gap: 8px;
+            align-items: center;
         }
         #topbar .controls button {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 200, 100, 0.2);
             color: #ccd;
-            padding: 6px 14px;
+            padding: 4px 10px;
             border-radius: 20px;
             cursor: pointer;
             font-family: 'Georgia', serif;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.2s;
+            white-space: nowrap;
         }
         #topbar .controls button:hover {
             background: rgba(255, 200, 100, 0.2);
@@ -77,7 +80,19 @@
             border-color: #ffdd88;
         }
         #topbar .controls button i {
-            margin-right: 6px;
+            margin-right: 4px;
+        }
+        #topbar .hamburger {
+            background: transparent;
+            border: none;
+            color: #ffdd88;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 6px;
+            display: none;
+        }
+        #topbar .hamburger:focus {
+            outline: none;
         }
 
         /* ---------- MAIN LAYOUT ---------- */
@@ -85,21 +100,23 @@
             display: flex;
             flex: 1;
             overflow: hidden;
+            position: relative;
         }
 
         /* ---------- SIDEBAR ---------- */
         #nav {
             width: 280px;
             min-width: 200px;
-            background: rgba(8, 8, 28, 0.92);
+            background: rgba(8, 8, 28, 0.95);
             backdrop-filter: blur(8px);
             border-right: 1px solid rgba(255, 200, 100, 0.08);
-            padding: 12px 6px 12px 10px;
+            padding: 10px 6px 10px 10px;
             overflow-y: auto;
-            z-index: 10;
+            z-index: 20;
             display: flex;
             flex-direction: column;
             gap: 2px;
+            transition: transform 0.3s ease;
         }
         #nav::-webkit-scrollbar {
             width: 4px;
@@ -118,9 +135,21 @@
             flex-shrink: 0;
             font-weight: bold;
             letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         #nav .nav-title i {
             margin-right: 8px;
+        }
+        #nav .nav-title .close-nav {
+            background: transparent;
+            border: none;
+            color: #88aadd;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            padding: 0 4px;
         }
 
         .nav-item {
@@ -128,9 +157,9 @@
             border: none;
             color: #88aadd;
             text-align: left;
-            padding: 4px 8px;
+            padding: 5px 8px;
             border-radius: 6px;
-            font-size: 12.5px;
+            font-size: 13px;
             font-family: 'Georgia', serif;
             cursor: pointer;
             transition: all 0.2s;
@@ -161,7 +190,7 @@
             align-items: center;
             justify-content: center;
             background: radial-gradient(ellipse at center, #12122a, #060612);
-            padding: 20px;
+            padding: 10px;
             position: relative;
             overflow: hidden;
         }
@@ -170,6 +199,8 @@
         #book {
             width: 900px;
             height: 600px;
+            max-width: 100%;
+            max-height: 100%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
             border-radius: 4px;
             background: #2a1e12;
@@ -180,97 +211,165 @@
         .turn-page {
             background: #fcf6ed;
             color: #1e1e2a;
-            padding: 30px 40px;
+            padding: 20px 28px;
             font-size: 14px;
             line-height: 1.7;
             box-sizing: border-box;
             overflow-y: auto;
             border-radius: 3px;
             font-family: 'Georgia', serif;
+            -webkit-overflow-scrolling: touch;
         }
         .turn-page h2 {
-            font-size: 22px;
+            font-size: 20px;
             color: #8b3e1f;
             border-bottom: 2px solid #d4b48c;
-            padding-bottom: 8px;
-            margin-bottom: 16px;
+            padding-bottom: 6px;
+            margin-bottom: 14px;
             font-weight: bold;
         }
         .turn-page h3 {
-            font-size: 17px;
+            font-size: 16px;
             color: #6a3a20;
-            margin-top: 18px;
-            margin-bottom: 8px;
+            margin-top: 16px;
+            margin-bottom: 6px;
         }
         .turn-page p {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-align: justify;
         }
         .turn-page blockquote {
             background: #efe6d8;
-            padding: 12px 18px;
+            padding: 10px 14px;
             border-left: 6px solid #b8863a;
-            margin: 12px 0;
+            margin: 10px 0;
             font-style: italic;
             color: #2a1e12;
+            font-size: 13px;
         }
         .turn-page .hadith-source {
             font-size: 12px;
             color: #6a6a7a;
             text-align: right;
-            margin-top: 6px;
+            margin-top: 4px;
         }
-
-        /* page numbers */
         .turn-page .page-number {
             position: absolute;
-            bottom: 12px;
-            right: 24px;
+            bottom: 10px;
+            right: 20px;
             font-size: 12px;
             color: #8a8a9a;
         }
 
-        /* responsive */
-        @media (max-width: 1200px) {
-            #book {
-                width: 700px;
-                height: 500px;
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 768px) {
+            #topbar .logo {
+                font-size: 14px;
+                max-width: 40%;
             }
-            .turn-page {
-                padding: 20px 28px;
-                font-size: 13px;
+            #topbar .controls button {
+                font-size: 11px;
+                padding: 3px 8px;
             }
-        }
-        @media (max-width: 900px) {
-            #nav {
-                width: 200px;
-                min-width: 140px;
-            }
-            #book {
-                width: 90vw;
-                height: 70vh;
-            }
-            .turn-page {
-                padding: 16px 20px;
-                font-size: 12.5px;
-            }
-        }
-        @media (max-width: 700px) {
-            #topbar .logo small {
+            #topbar .controls button span {
                 display: none;
             }
-            #nav {
-                width: 140px;
-                min-width: 100px;
-                padding: 6px 4px;
+            #topbar .controls button i {
+                margin-right: 0;
             }
-            .nav-item {
-                font-size: 11px;
-                padding: 3px 6px;
+            #topbar .hamburger {
+                display: block;
+            }
+
+            #nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 75%;
+                max-width: 300px;
+                transform: translateX(-100%);
+                z-index: 100;
+                border-right: 1px solid rgba(255, 200, 100, 0.2);
+                background: rgba(8, 8, 28, 0.98);
+                padding-top: 60px;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.6);
+            }
+            #nav.open {
+                transform: translateX(0);
+            }
+            #nav .nav-title .close-nav {
+                display: block;
+            }
+            #nav .nav-item {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .turn-page {
+                padding: 14px 18px;
+                font-size: 13px;
+                line-height: 1.6;
+            }
+            .turn-page h2 {
+                font-size: 18px;
+            }
+            .turn-page h3 {
+                font-size: 15px;
+            }
+            .turn-page blockquote {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            .turn-page .page-number {
+                font-size: 10px;
+                bottom: 8px;
+                right: 14px;
+            }
+
+            #book {
+                width: 95vw;
+                height: 75vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #topbar .logo {
+                font-size: 12px;
+            }
+            #topbar .controls button {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
+            .turn-page {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+            .turn-page h2 {
+                font-size: 16px;
+            }
+            .turn-page h3 {
+                font-size: 14px;
             }
             #book {
-                height: 60vh;
+                width: 98vw;
+                height: 70vh;
             }
+        }
+
+        /* Overlay when sidebar open on mobile */
+        #nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 90;
+        }
+        #nav-overlay.active {
+            display: block;
         }
 
         /* loading */
@@ -286,23 +385,31 @@
 
     <!-- TOP BAR -->
     <div id="topbar">
+        <button class="hamburger" id="hamburgerBtn" aria-label="Отвори содржина">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="logo">
-            <i class="fas fa-book-open" style="color:#ffdd88;margin-right:10px;"></i>
-            Најдоброто во Исламот
-            <small>79 одговори од Куранот и сунетот</small>
+            <i class="fas fa-book-open" style="color:#ffdd88;margin-right:6px;"></i>
+            <span>Најдоброто во Исламот</span>
         </div>
         <div class="controls">
-            <button id="prevPage"><i class="fas fa-chevron-left"></i> Претходна</button>
-            <button id="nextPage">Следна <i class="fas fa-chevron-right"></i></button>
+            <button id="prevPage"><i class="fas fa-chevron-left"></i><span> Претходна</span></button>
+            <button id="nextPage"><span>Следна </span><i class="fas fa-chevron-right"></i></button>
             <button id="goToFirst"><i class="fas fa-home"></i></button>
         </div>
     </div>
+
+    <!-- OVERLAY for mobile sidebar -->
+    <div id="nav-overlay"></div>
 
     <!-- MAIN -->
     <div id="app">
         <!-- Sidebar -->
         <div id="nav">
-            <div class="nav-title"><i class="fas fa-list-ul"></i> Содржина</div>
+            <div class="nav-title">
+                <span><i class="fas fa-list-ul"></i> Содржина</span>
+                <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+            </div>
             <div id="navList"></div>
         </div>
 
@@ -319,9 +426,6 @@
         // 1.  ЦЕЛОСНА СОДРЖИНА НА КНИГАТА (како една голема низа)
         //    Извадена од дадениот .docx фајл, поделена на поглавја.
         // ===================================================================
-
-        // Ќе ја чуваме содржината во array од објекти: { title, body, number }
-        // Ќе ги парсираме од големиот текст подолу.
 
         const fullText = `
     **Скопје, 2026 година**
@@ -3750,92 +3854,42 @@
     // ===================================================================
 
     function parseChapters(text) {
-        // Ќе користиме регекс да ги најдеме сите наслови кои почнуваат со "## " (или "## 1.", "## 2." итн.)
-        // и ќе го земеме текстот до следниот таков наслов.
+        // Ќе ги земеме сите наслови со ## и телото до следниот ##
         const chapters = [];
-        // regex за наслови: ##  (број или збор)
-        const headerRegex = /^##\s+(.*?)(?:\s*\(.*?\))?$/gm;
-        let match;
-        let lastIndex = 0;
-        // Прво најди ги сите наслови и нивните позиции
-        const headers = [];
-        while ((match = headerRegex.exec(text)) !== null) {
-            const title = match[1].trim();
-            headers.push({
-                title: title,
-                index: match.index,
-                end: match.index + match[0].length
-            });
-        }
-
-        // Ако нема наслови, врати празно
-        if (headers.length === 0) {
-            // Пробај да ги најдеш по "Содржина" - можеби нема ## пред секое
-            // Ќе пробаме да ги земеме од содржината
-            // Најди ги сите линии со број и точка
-            const lines = text.split('\n');
-            let inContent = false;
-            let contentChapters = [];
-            for (let line of lines) {
-                if (line.trim().startsWith('Содржина')) {
-                    inContent = true;
-                    continue;
-                }
-                if (inContent && line.trim().match(/^\[\d+\./)) {
-                    const parts = line.split('--');
-                    if (parts.length >= 2) {
-                        const titlePart = parts[0].replace(/^\[\d+\.\s*/, '').trim();
-                        contentChapters.push(titlePart);
-                    }
-                }
-                if (inContent && line.trim() === '') continue;
-                if (inContent && !line.trim().match(/^\[\d+\./)) {
-                    // Заврши содржина
-                    inContent = false;
-                }
-            }
-            // Сега пробај да ги најдеш насловите во текстот
-            // Ќе користиме едноставен split по "## "
-            const parts = text.split('## ');
-            for (let i = 1; i < parts.length; i++) {
-                const part = parts[i];
-                const lines2 = part.split('\n');
-                const title = lines2[0].trim();
-                // телото е остатокот
-                let body = lines2.slice(1).join('\n');
-                // Треба да го најдеме крајот на ова поглавје (пред следниот "## ")
-                // Нема да го правиме тоа тука, туку ќе го земеме целиот текст на поглавјето
-                // Поради големината ќе го земеме до следниот "## " - но ние веќе ги имаме поделено.
-                // Ќе го земеме како што е.
-                // Но мора да ги филтрираме не-насловите како "Содржина"
-                if (title && !title.includes('Скопје') && !title.includes('Содржина')) {
+        const lines = text.split('\n');
+        let currentTitle = '';
+        let currentBody = [];
+        let inChapter = false;
+        for (let line of lines) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith('## ')) {
+                // ново поглавје
+                if (currentTitle) {
                     chapters.push({
-                        number: i,
-                        title: title,
-                        body: body.trim()
+                        number: chapters.length + 1,
+                        title: currentTitle,
+                        body: currentBody.join('\n').trim()
                     });
                 }
+                currentTitle = trimmed.substring(3).trim();
+                currentBody = [];
+                inChapter = true;
+            } else if (inChapter) {
+                currentBody.push(line);
             }
-            return chapters;
         }
-
-        // Ако има наслови, земи ги сите
-        for (let i = 0; i < headers.length; i++) {
-            const h = headers[i];
-            const startIdx = h.end;
-            const endIdx = (i + 1 < headers.length) ? headers[i + 1].index : text.length;
-            const body = text.substring(startIdx, endIdx).trim();
-            // Исклучи ги воведните делови
-            if (h.title.includes('ВОВЕД') || h.title.includes('Содржина') || h.title.includes('Заклучок')) {
-                // Но сепак ги додаваме
-            }
+        // последно поглавје
+        if (currentTitle) {
             chapters.push({
-                number: i + 1,
-                title: h.title,
-                body: body
+                number: chapters.length + 1,
+                title: currentTitle,
+                body: currentBody.join('\n').trim()
             });
         }
-        return chapters;
+        // Филтрирај ги не-поглавја како "Скопје", "Содржина"
+        return chapters.filter(ch => {
+            return ch.title && !ch.title.includes('Скопје') && !ch.title.includes('Содржина') && !ch.title.match(/^[0-9]/);
+        });
     }
 
     // ===================================================================
@@ -3861,33 +3915,41 @@
                 const i = $(this).data('index');
                 goToPage(i);
                 $(this).addClass('active').siblings().removeClass('active');
+                // Затвори навигација на мобилен
+                closeNav();
             });
             navList.append(btn);
         });
 
-        // Изгради ги страниците за Turn.js
-        // Секое поглавје ќе биде една страница (ако има многу текст, ќе се прелее, но turn.js поддржува overflow)
-        // Поради големината, ќе направиме по една страница по поглавје.
+        // Изгради ги страниците
         const pages = chapters.map((ch, idx) => {
             const num = ch.number || idx + 1;
-            // Ограничи ја должината на телото ако е премногу долга (ќе се скрати во HTML)
             let bodyHtml = ch.body;
-            // Ако телото е премногу долго, ќе го скратиме со "..." но подобро да се покаже цело
-            // Ќе додадеме стил за скролување
+            // Замени нови редови со <br>
+            bodyHtml = bodyHtml.replace(/\n/g, '<br>');
             return `
                 <div class="turn-page" data-index="${idx}">
                     <h2>${num}. ${ch.title}</h2>
-                    <div style="overflow-y:auto;max-height:460px;padding-right:8px;">
-                        ${bodyHtml.replace(/\n/g, '<br>')}
+                    <div style="overflow-y:auto;max-height:460px;padding-right:8px;font-size:inherit;">
+                        ${bodyHtml}
                     </div>
                     <div class="page-number">${num} / ${chapters.length}</div>
                 </div>
             `;
         });
 
-        // Вметни ги страниците во книгата
         const book = $('#book');
         book.html(pages.join(''));
+
+        // Функција за големина на книгата
+        function resizeBook() {
+            const container = $('#book-container');
+            const cw = container.width() - 20;
+            const ch = container.height() - 20;
+            const w = Math.min(cw, 900);
+            const h = Math.min(ch, 600);
+            book.turn('size', w, h);
+        }
 
         // Иницијализирај Turn.js
         book.turn({
@@ -3900,14 +3962,12 @@
             elevation: 50,
             when: {
                 turned: function(e, page) {
-                    // Активна страница во навигација
-                    const pageNum = page - 1; // turn.js користи 1-базиран индекс
+                    const pageNum = page - 1;
                     const navItems = $('.nav-item');
                     navItems.removeClass('active');
                     if (pageNum >= 0 && pageNum < navItems.length) {
                         $(navItems[pageNum]).addClass('active');
                     }
-                    // Скролирај навигацијата до активниот елемент
                     const activeNav = $('.nav-item.active');
                     if (activeNav.length) {
                         const container = $('#nav');
@@ -3918,18 +3978,12 @@
             }
         });
 
-        // Реагирај на промена на големината
-        $(window).on('resize', function() {
-            const width = $('#book-container').width() - 40;
-            const height = $(window).height() - 140;
-            const newWidth = Math.min(width, 900);
-            const newHeight = Math.min(height, 600);
-            book.turn('size', newWidth, newHeight);
-        });
+        // Ресајзирај по иницијализација
+        setTimeout(resizeBook, 200);
+        $(window).on('resize', resizeBook);
 
         // Функција за одење до страница
         function goToPage(idx) {
-            // idx е 0-базиран, turn.js користи 1-базиран
             const page = idx + 1;
             if (page >= 1 && page <= book.turn('pages')) {
                 book.turn('page', page);
@@ -3937,24 +3991,33 @@
         }
 
         // Навигациони копчиња
-        $('#prevPage').on('click', function() {
-            book.turn('previous');
-        });
-        $('#nextPage').on('click', function() {
-            book.turn('next');
-        });
-        $('#goToFirst').on('click', function() {
-            goToPage(0);
-        });
+        $('#prevPage').on('click', function() { book.turn('previous'); });
+        $('#nextPage').on('click', function() { book.turn('next'); });
+        $('#goToFirst').on('click', function() { goToPage(0); });
 
-        // По иницијализација, отвори прва страница
+        // Отвори прва страница
         setTimeout(function() {
             goToPage(0);
             $('.nav-item').first().addClass('active');
         }, 300);
 
-        // Стави го референцата на функцијата во глобален обем за debug
+        // Мобилна навигација - toggle
+        function toggleNav() {
+            $('#nav').toggleClass('open');
+            $('#nav-overlay').toggleClass('active');
+        }
+        function closeNav() {
+            $('#nav').removeClass('open');
+            $('#nav-overlay').removeClass('active');
+        }
+
+        $('#hamburgerBtn').on('click', toggleNav);
+        $('#closeNavBtn').on('click', closeNav);
+        $('#nav-overlay').on('click', closeNav);
+
+        // Стави референци во глобален
         window.goToPage = goToPage;
+        window.closeNav = closeNav;
     });
     </script>
 
